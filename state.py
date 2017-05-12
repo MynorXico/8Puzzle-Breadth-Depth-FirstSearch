@@ -2,27 +2,47 @@ import board
 
 
 class State:
-    Parent = []
-    Children = []
-    Numbers = []
-    CurrentBoard = board.Board()
+    def __init__(self):
+        self.Parent = []
+        self.Children = []
+        self.Numbers = []
+        self.CurrentBoard = board.Board()
 
+    def PrintState(self):
+        for row in self.CurrentBoard.Matrix:
+            print row
+        print "\n"
     def GenerateChildren(self):
         GeneratedChildren = []
         if (self.CurrentBoard.CanMoveUp()):
             tmpState = State()
-            tmpState.CurrentBoard = self.CurrentBoard.MoveUp()
+            tmpBoard = board.Board()
+            tmpBoard.Matrix = self.CurrentBoard.MoveUp()
+            tmpState.CurrentBoard = tmpBoard
+            tmpState.Parent = self
             GeneratedChildren.append(tmpState)
         if (self.CurrentBoard.CanMoveDown()):
             tmpState = State()
-            tmpState.CurrentBoard = self.CurrentBoard.MoveDown()
+            tmpBoard = board.Board()
+            tmpBoard.Matrix = self.CurrentBoard.MoveDown()
+            tmpState.CurrentBoard = tmpBoard
+            tmpState.Parent = self
             GeneratedChildren.append(tmpState)
+
         if (self.CurrentBoard.CanMoveLeft()):
             tmpState = State()
-            tmpState.CurrentBoard = self.CurrentBoard.MoveLeft()
+            tmpBoard = board.Board()
+            tmpBoard.Matrix = self.CurrentBoard.MoveLeft()
+            tmpState.CurrentBoard = tmpBoard
+            tmpState.Parent = self
             GeneratedChildren.append(tmpState)
+
         if (self.CurrentBoard.CanMoveRight()):
             tmpState = State()
-            tmpState.CurrentBoard = self.CurrentBoard.MoveRight()
+            tmpBoard = board.Board()
+            tmpBoard.Matrix = self.CurrentBoard.MoveRight()
+            tmpState.CurrentBoard = tmpBoard
+            tmpState.Parent = self
             GeneratedChildren.append(tmpState)
+
         return GeneratedChildren
