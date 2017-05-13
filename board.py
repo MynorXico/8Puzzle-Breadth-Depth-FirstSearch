@@ -3,28 +3,27 @@ class Board:
 
     def __init__(self):
         self.Matrix = [[0 for i in range(3)] for j in range(3)]
+        self.ZeroPosition = 0
 
     def GetBoard(self):
         return self.Matrix
 
     def FillBoard(self, Numbers):
-        position = 0
-        for i in Numbers:
-            self.Matrix[position / 3][position % 3] = Numbers[position]
-            position += 1
-
+        for i in range(len(Numbers)):
+            self.Matrix[i / 3][i % 3] = Numbers[i]
     # Moving 0
     def MoveUp(self):
         tmpMatrix = Clone3x3Matrix(self.Matrix)
-        ZeroPosition = self.GetZeroPosition()
+        ZeroPosition = self.ZeroPosition
         tmp = tmpMatrix[ZeroPosition / 3][ZeroPosition % 3]
         tmpMatrix[ZeroPosition / 3][ZeroPosition % 3] = tmpMatrix[(ZeroPosition / 3) - 1][ZeroPosition % 3]
         tmpMatrix[(ZeroPosition / 3) - 1][ZeroPosition % 3] = tmp
+
         return tmpMatrix
 
     def MoveDown(self):
         tmpMatrix = Clone3x3Matrix(self.Matrix)
-        ZeroPosition = self.GetZeroPosition()
+        ZeroPosition = self.ZeroPosition
         tmp = tmpMatrix[ZeroPosition / 3][ZeroPosition % 3]
         tmpMatrix[ZeroPosition / 3][ZeroPosition % 3] = tmpMatrix[(ZeroPosition / 3) + 1][ZeroPosition % 3]
         tmpMatrix[(ZeroPosition / 3) + 1][ZeroPosition % 3] = tmp
@@ -32,7 +31,7 @@ class Board:
 
     def MoveLeft(self):
         tmpMatrix = Clone3x3Matrix(self.Matrix)
-        ZeroPosition = self.GetZeroPosition()
+        ZeroPosition = self.ZeroPosition
         tmp = tmpMatrix[ZeroPosition / 3][ZeroPosition % 3]
         tmpMatrix[ZeroPosition / 3][ZeroPosition % 3] = tmpMatrix[ZeroPosition / 3][(ZeroPosition % 3) - 1]
         tmpMatrix[ZeroPosition / 3][(ZeroPosition % 3) - 1] = tmp
@@ -40,7 +39,7 @@ class Board:
 
     def MoveRight(self):
         tmpMatrix = Clone3x3Matrix(self.Matrix)
-        ZeroPosition = self.GetZeroPosition()
+        ZeroPosition = self.ZeroPosition
         tmp = tmpMatrix[ZeroPosition / 3][ZeroPosition % 3]
         tmpMatrix[ZeroPosition / 3][ZeroPosition % 3] = tmpMatrix[ZeroPosition / 3][(ZeroPosition % 3) + 1]
         tmpMatrix[ZeroPosition / 3][(ZeroPosition % 3) + 1] = tmp
@@ -83,11 +82,6 @@ class Board:
 
 def Clone3x3Matrix(Matriz):
     Output = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-    rowN = 0
-    for row in Matriz:
-        column = 0
-        for i in row:
-            Output[rowN][column] = i
-            column += 1
-        rowN += 1
+    for i in range(len(Output)):
+        Output[i] = list(Matriz[i])
     return Output
