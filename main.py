@@ -1,10 +1,9 @@
 import solver
 
-numbers = [5, 8, 2, 3, 7, 1, 6, 4]
+numbers = [6, 1, 8, 4, 0, 2, 7, 3, 5]
 s = solver.Solver()
 s.Solve(numbers)
 
-'''Tests'''
+# Tests
 test1 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
-test2 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
-# print solver.EqualMatrices(test1, test2)
+test2 = [[0, 1, 2], [3, 4, 5], [5, 7, 8]]

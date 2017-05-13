@@ -45,28 +45,24 @@ class Board:
         tmpMatrix[ZeroPosition / 3][(ZeroPosition % 3) + 1] = tmp
         return tmpMatrix
 
-    # Verifying 0
+    # Verifying 0 position
     def CanMoveUp(self):
-        ZeroPosition = self.GetZeroPosition()
-        if ((ZeroPosition / 3) != 0):
+        if ((self.ZeroPosition / 3) != 0):
             return True
         return False
 
     def CanMoveDown(self):
-        ZeroPosition = self.GetZeroPosition()
-        if ((ZeroPosition / 3) != 2):
+        if ((self.ZeroPosition / 3) != 2):
             return True
         return False
 
     def CanMoveLeft(self):
-        ZeroPosition = self.GetZeroPosition()
-        if ((ZeroPosition % 3 != 0)):
+        if ((self.ZeroPosition % 3 != 0)):
             return True
         return False
 
     def CanMoveRight(self):
-        ZeroPosition = self.GetZeroPosition()
-        if (ZeroPosition % 3 != 2):
+        if (self.ZeroPosition % 3 != 2):
             return True
         return False
 
@@ -83,5 +79,5 @@ class Board:
 def Clone3x3Matrix(Matriz):
     Output = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     for i in range(len(Output)):
-        Output[i] = list(Matriz[i])
+        Output[i] = Matriz[i][:]
     return Output

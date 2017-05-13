@@ -45,6 +45,7 @@ class Solver:
             if GoalState.CurrentBoard.Matrix == tmpState.CurrentBoard.Matrix:
                 tmpState.PrintSatePath()
                 return True
+
             children = tmpState.GenerateChildren()
             for i in children:
                 tmpChildren = i
