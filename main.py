@@ -1,6 +1,6 @@
 import solver
 
-numbers = [8, 5, 7, 2, 4, 3, 6, 0, 2]
+numbers = [6, 1, 8, 4, 0, 2, 7, 3, 5]
 s = solver.Solver()
 s.Solve(numbers)
 

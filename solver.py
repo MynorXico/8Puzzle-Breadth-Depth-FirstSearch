@@ -9,34 +9,34 @@ class Solver:
         self.NodesExpanded = 0
         self.FrontierMatrices = []
         self.VisitedMatrices = []
+        self.ZeroPosition = 0
 
     def Solve(self, Numbers):
         GoalNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         GoalState = state.State()
-        GoalState.Initialize(GoalNumbers)
+        GoalState.CurrentBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
         InitialState = state.State()
-        InitialState.CurrentBoard.Matrix = Numbers[:]
-        InitialState.CurrentBoard.ZeroPosition = InitialState.CurrentBoard.GetZeroPosition()
+        InitialState.CurrentBoard = Numbers[:]
+        InitialState.ZeroPosition = InitialState.GetZeroPosition()
 
         self.FrontierStates.append(InitialState)
-        self.FrontierMatrices.append(InitialState.CurrentBoard.Matrix)
+        self.FrontierMatrices.append(InitialState.CurrentBoard)
 
         print timer()
         while (len(self.FrontierStates) != 0):
-            if (len(self.VisitedMatrices) == 10000):
+            if (len(self.VisitedMatrices) % 10000 == 0):
+                print len(self.VisitedMatrices)
                 print (timer())
             tmpState = self.FrontierStates.pop(0)
-            self.VisitedMatrices.append(tmpState.CurrentBoard.Matrix)
-            if GoalState.CurrentBoard.Matrix == tmpState.CurrentBoard.Matrix:
+            self.VisitedMatrices.append(tmpState.CurrentBoard)
+            if GoalState.CurrentBoard == tmpState.CurrentBoard:
                 tmpState.PrintSatePath()
                 print str(timer()) + " (" + str(len(self.VisitedMatrices)) + ") "
                 return True
 
-            children = tmpState.GenerateChildren(self.VisitedMatrices, self.FrontierMatrices)
-            for i in children:
-                self.FrontierStates.append(i)
-                self.FrontierMatrices.append(i.CurrentBoard.Matrix)
+            tmpState.GenerateChildren(self.VisitedMatrices, self.FrontierMatrices, self.FrontierStates)
 
         print ("False")
         return False
+
