@@ -16,46 +16,54 @@ class State:
 
     def PrintState(self):
         for row in self.CurrentBoard.Matrix:
-            print row
-        print "\n"
-    def GenerateChildren(self):
+            print (row)
+        print ("\n")
+
+    def GenerateChildren(self, VisitedMatrices, FrontierMatrices):
         GeneratedChildren = []
         if (self.CurrentBoard.CanMoveUp()):
-            tmpState = State()
-            tmpBoard = board.Board()
-            tmpBoard.Matrix = self.CurrentBoard.MoveUp()
-            tmpState.CurrentBoard = tmpBoard
-            tmpState.Movement = self.Movement + ", Up"
-            tmpState.CurrentBoard.ZeroPosition = self.CurrentBoard.ZeroPosition - 3
-            GeneratedChildren.append(tmpState)
+            tmpMatrix = self.CurrentBoard.MoveUp()
+            if (tmpMatrix in VisitedMatrices or tmpMatrix in FrontierMatrices) == False:
+                tmpState = State()
+                tmpBoard = board.Board()
+                tmpBoard.Matrix = tmpMatrix
+                tmpState.CurrentBoard = tmpBoard
+                tmpState.Movement = self.Movement + "U"
+                tmpState.CurrentBoard.ZeroPosition = self.CurrentBoard.ZeroPosition - 3
+                GeneratedChildren.append(tmpState)
         if (self.CurrentBoard.CanMoveDown()):
-            tmpState = State()
-            tmpBoard = board.Board()
-            tmpBoard.Matrix = self.CurrentBoard.MoveDown()
-            tmpState.CurrentBoard = tmpBoard
-            tmpState.Movement = self.Movement + ", Down"
-            tmpState.CurrentBoard.ZeroPosition = self.CurrentBoard.ZeroPosition + 3
-            GeneratedChildren.append(tmpState)
+            tmpMatrix = self.CurrentBoard.MoveDown()
+            if (tmpMatrix in VisitedMatrices or tmpMatrix in FrontierMatrices) == False:
+                tmpState = State()
+                tmpBoard = board.Board()
+                tmpBoard.Matrix = tmpMatrix
+                tmpState.CurrentBoard = tmpBoard
+                tmpState.Movement = self.Movement + "D"
+                tmpState.CurrentBoard.ZeroPosition = self.CurrentBoard.ZeroPosition + 3
+                GeneratedChildren.append(tmpState)
         if (self.CurrentBoard.CanMoveLeft()):
-            tmpState = State()
-            tmpBoard = board.Board()
-            tmpBoard.Matrix = self.CurrentBoard.MoveLeft()
-            tmpState.CurrentBoard = tmpBoard
-            tmpState.Movement = self.Movement + ", Left"
-            tmpState.CurrentBoard.ZeroPosition = self.CurrentBoard.ZeroPosition - 1
-            GeneratedChildren.append(tmpState)
-
+            tmpMatrix = self.CurrentBoard.MoveLeft()
+            if (tmpMatrix in VisitedMatrices or tmpMatrix in FrontierMatrices) == False:
+                tmpState = State()
+                tmpBoard = board.Board()
+                tmpBoard.Matrix = tmpMatrix
+                tmpState.CurrentBoard = tmpBoard
+                tmpState.Movement = self.Movement + "L"
+                tmpState.CurrentBoard.ZeroPosition = self.CurrentBoard.ZeroPosition - 1
+                GeneratedChildren.append(tmpState)
         if (self.CurrentBoard.CanMoveRight()):
-            tmpState = State()
-            tmpBoard = board.Board()
-            tmpBoard.Matrix = self.CurrentBoard.MoveRight()
-            tmpState.CurrentBoard = tmpBoard
-            tmpState.Movement = self.Movement + ", Right"
-            tmpState.CurrentBoard.ZeroPosition = self.CurrentBoard.ZeroPosition + 1
-            GeneratedChildren.append(tmpState)
+            tmpMatrix = self.CurrentBoard.MoveRight()
+            if (tmpMatrix in VisitedMatrices or tmpMatrix in FrontierMatrices) == False:
+                tmpState = State()
+                tmpBoard = board.Board()
+                tmpBoard.Matrix = tmpMatrix
+                tmpState.CurrentBoard = tmpBoard
+                tmpState.Movement = self.Movement + "R"
+                tmpState.CurrentBoard.ZeroPosition = self.CurrentBoard.ZeroPosition + 1
+                GeneratedChildren.append(tmpState)
 
         return GeneratedChildren
 
     def PrintSatePath(self):
         current = self
-        print current.Movement
+        print (current.Movement)

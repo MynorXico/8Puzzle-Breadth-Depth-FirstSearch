@@ -6,22 +6,9 @@ import state
 class Solver:
     def __init__(self):
         self.FrontierStates = []
-        self.VisitedStates = []
         self.NodesExpanded = 0
         self.FrontierMatrices = []
         self.VisitedMatrices = []
-
-    def IsInVisitedStates(self, Matrix):
-        for i in self.VisitedStates:
-            if i.CurrentBoard.Matrix == Matrix:
-                return True
-        return False
-
-    def IsInFrontierStates(self, Matrix):
-        for i in self.FrontierStates:
-            if i.CurrentBoard.Matrix == Matrix:
-                return True
-        return False
 
     def Solve(self, Numbers):
         GoalNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -29,30 +16,27 @@ class Solver:
         GoalState.Initialize(GoalNumbers)
 
         InitialState = state.State()
-        InitialState.CurrentBoard.FillBoard(Numbers)
+        InitialState.CurrentBoard.Matrix = Numbers[:]
         InitialState.CurrentBoard.ZeroPosition = InitialState.CurrentBoard.GetZeroPosition()
-        self.FrontierStates.append(InitialState)
 
+        self.FrontierStates.append(InitialState)
         self.FrontierMatrices.append(InitialState.CurrentBoard.Matrix)
 
-
+        print timer()
         while (len(self.FrontierStates) != 0):
-            if (len(self.VisitedStates) % 2000 == 0):
-                print str(timer()) + " (" + str(len(self.VisitedStates)) + ") "
+            if (len(self.VisitedMatrices) == 10000):
+                print (timer())
             tmpState = self.FrontierStates.pop(0)
-            self.VisitedStates.append((tmpState))
             self.VisitedMatrices.append(tmpState.CurrentBoard.Matrix)
             if GoalState.CurrentBoard.Matrix == tmpState.CurrentBoard.Matrix:
                 tmpState.PrintSatePath()
+                print str(timer()) + " (" + str(len(self.VisitedMatrices)) + ") "
                 return True
 
-            children = tmpState.GenerateChildren()
+            children = tmpState.GenerateChildren(self.VisitedMatrices, self.FrontierMatrices)
             for i in children:
-                tmpChildren = i
-                if (
-                        tmpChildren.CurrentBoard.Matrix in self.FrontierMatrices or tmpChildren.CurrentBoard.Matrix in self.VisitedMatrices) == False:
-                    self.FrontierStates.append(tmpChildren)
-                    self.FrontierMatrices.append(tmpChildren.CurrentBoard.Matrix)
+                self.FrontierStates.append(i)
+                self.FrontierMatrices.append(i.CurrentBoard.Matrix)
 
-        print "False"
+        print ("False")
         return False
