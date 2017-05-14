@@ -29,6 +29,7 @@ class Solver:
                 print len(self.VisitedMatrices)
                 print (timer())
             tmpState = self.FrontierStates.pop(0)
+            self.FrontierMatrices.pop(0)
             self.VisitedMatrices.append(tmpState.CurrentBoard)
             if GoalState.CurrentBoard == tmpState.CurrentBoard:
                 tmpState.PrintSatePath()
