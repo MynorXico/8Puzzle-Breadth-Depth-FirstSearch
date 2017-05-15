@@ -1,9 +1,9 @@
+#!/usr/bin/python2.7.2
+import sys
+
 import solver
 
-numbers = [6, 1, 8, 4, 0, 2, 7, 3, 5]
-s = solver.Solver()
+numbers = [4, 0, 3, 8, 6, 7, 1, 2, 5]
+s = solver.Solver(sys.argv[1])
 s.Solve(numbers)
 
-# Tests
-test1 = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
-test2 = [[0, 1, 2], [3, 4, 5], [5, 7, 8]]

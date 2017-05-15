@@ -1,24 +1,15 @@
+#!/usr/bin/python2.7.2
 class State:
-
-    def __init__(self):
-        self.Parent = []
-        self.Children = []
-        self.Numbers = []
-        self.CurrentBoard = [0, 0, 0, 0, 0, 0, 0, 0]
-        self.Movement = ""
-        self.ZeroPosition = 0
-
-    def Initialize(self, Numbers):
-        self.Numbers = Numbers
+    def __init__(self, Numbers):
         self.CurrentBoard = Numbers[:]
         self.ZeroPosition = self.CurrentBoard.index(0)
+        self.Movement = ""
 
     def GenerateChildren(self, VisitedMatrices, FrontierMatrices, FrontierStates):
         if (self.ZeroPosition / 3) != 0:
             tmpMatrix = self.MoveUp()
             if (tmpMatrix in VisitedMatrices or tmpMatrix in FrontierMatrices) == False:
-                tmpState = State()
-                tmpState.CurrentBoard = tmpMatrix
+                tmpState = State(tmpMatrix)
                 tmpState.Movement = self.Movement + "U"
                 tmpState.ZeroPosition = self.ZeroPosition - 3
                 FrontierStates.append(tmpState)
@@ -26,8 +17,7 @@ class State:
         if ((self.ZeroPosition / 3) != 2):
             tmpMatrix = self.MoveDown()
             if (tmpMatrix in VisitedMatrices or tmpMatrix in FrontierMatrices) == False:
-                tmpState = State()
-                tmpState.CurrentBoard = tmpMatrix
+                tmpState = State(tmpMatrix)
                 tmpState.Movement = self.Movement + "D"
                 tmpState.ZeroPosition = self.ZeroPosition + 3
                 FrontierStates.append(tmpState)
@@ -35,8 +25,7 @@ class State:
         if self.ZeroPosition % 3 != 0:
             tmpMatrix = self.MoveLeft()
             if (tmpMatrix in VisitedMatrices or tmpMatrix in FrontierMatrices) == False:
-                tmpState = State()
-                tmpState.CurrentBoard = tmpMatrix
+                tmpState = State(tmpMatrix)
                 tmpState.Movement = self.Movement + "L"
                 tmpState.ZeroPosition = self.ZeroPosition - 1
                 FrontierStates.append(tmpState)
@@ -44,8 +33,7 @@ class State:
         if (self.ZeroPosition % 3 != 2):
             tmpMatrix = self.MoveRight()
             if (tmpMatrix in VisitedMatrices or tmpMatrix in FrontierMatrices) == False:
-                tmpState = State()
-                tmpState.CurrentBoard = tmpMatrix
+                tmpState = State(tmpMatrix)
                 tmpState.Movement = self.Movement + "R"
                 tmpState.ZeroPosition = self.ZeroPosition + 1
                 FrontierStates.append(tmpState)
